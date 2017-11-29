@@ -39,13 +39,81 @@ class User implements UserInterface, \Serializable
      */
     private $isAuthor = false;
     /**
-     * @ORM\ManyToOne(targetEntity="Article", inversedBy="author")
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="author")
      */
     private $articles;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+    }
+
+    public function isAuthor()
+    {
+        return $this->isAuthor;
+    }
+
+    public function getRoles()
+    {
+        $roles = ['ROLE_USER'];
+
+        if ($this->isAuthor()) {
+            $roles[] = 'ROLE_AUTHOR';
+        }
+
+        return $roles;
+    }
+
+    public function getSalt()
+    {
+        return;
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        return;
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->firstname,
+            $this->lastname,
+            $this->isAuthor,
+            $this->password,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->firstname,
+            $this->lastname,
+            $this->isAuthor,
+            $this->password,
+            ) = unserialize($serialized);
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
     }
 
     /**
@@ -134,60 +202,5 @@ class User implements UserInterface, \Serializable
     public function setArticles($articles)
     {
         $this->articles = $articles;
-    }
-
-    public function getRoles()
-    {
-        $roles = ['ROLE_USER'];
-
-        if ($this->isAuthor()) {
-            $roles[] = 'ROLE_AUTHOR';
-        }
-
-        return $roles;
-    }
-
-    public function getSalt()
-    {
-        return;
-    }
-
-    public function getUsername()
-    {
-        return $this->email;
-    }
-
-    public function eraseCredentials()
-    {
-        return;
-    }
-
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->email,
-            $this->firstname,
-            $this->lastname,
-            $this->isAuthor,
-            $this->password,
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->email,
-            $this->firstname,
-            $this->lastname,
-            $this->isAuthor,
-            $this->password,
-        ) = unserialize($serialized);
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
     }
 }

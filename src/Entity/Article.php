@@ -29,7 +29,7 @@ class Article
      */
     private $content;
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="articles")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="articles")
      */
     private $author;
     /**
@@ -37,7 +37,7 @@ class Article
      */
     private $countView = 0;
     /**
-     * @ORM\ManyToOne(targetEntity="Tag")
+     * @ORM\ManyToMany(targetEntity="Tag")
      */
     private $tags;
     /**
@@ -52,7 +52,10 @@ class Article
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->updatedAt = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
+
 
     /**
      * @return mixed

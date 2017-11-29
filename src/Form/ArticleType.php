@@ -18,11 +18,24 @@ class ArticleType extends AbstractType
     {
         //titre tag et contenu
         $builder
-            ->add('submit', SubmitType::class)
+            ->add('title')
+            ->add('tags',
+                EntityType::class,
+                [
+                    'class' => Tag::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                ])
+            ->add('content',
+                TextareaType::class)
+            ->add('submit',
+                SubmitType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefaults(['data_class' => Article::class]);
     }
 }

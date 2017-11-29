@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Slug\SlugGenerator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

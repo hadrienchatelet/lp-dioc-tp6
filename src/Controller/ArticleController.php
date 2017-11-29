@@ -32,6 +32,7 @@ class ArticleController extends Controller
 
     /**
      * @Route(path="/new", name="article_new")
+     * @Security("is_granted('ROLE_AUTHOR')")
      */
     public function newAction(NewArticleHandler $articleHandler, Request $request)
     {
@@ -52,6 +53,7 @@ class ArticleController extends Controller
 
     /**
      * @Route(path="/update/{slug}", name="article_update")
+     * @Security("is_granted('ROLE_AUTHOR')")
      */
     public function updateAction()
     {

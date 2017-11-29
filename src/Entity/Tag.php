@@ -9,9 +9,51 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tag
 {
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
+    /**
+     * @ORM\Column()
+     */
     private $name;
+    /**
+     * @ORM\Column()
+     */
     private $slug;
 
     // Uniquement des getter et un constructeur
+    public function __construct($name, $slug)
+    {
+        $this->name = $name;
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+
 }

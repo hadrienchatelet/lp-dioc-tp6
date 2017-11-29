@@ -12,15 +12,129 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, \Serializable
 {
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
+    /**
+     * @ORM\Column()
+     */
     private $email;
+    /**
+     * @ORM\Column()
+     */
     private $firstname;
+    /**
+     * @ORM\Column()
+     */
     private $lastname;
+    /**
+     * @ORM\Column()
+     */
     private $password;
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $isAuthor = false;
+    /**
+     * @ORM\ManyToOne(targetEntity="Article", inversedBy="author")
+     */
     private $articles;
 
-    // Fixme
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param mixed $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param mixed $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsAuthor()
+    {
+        return $this->isAuthor;
+    }
+
+    /**
+     * @param mixed $isAuthor
+     */
+    public function setIsAuthor($isAuthor)
+    {
+        $this->isAuthor = $isAuthor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArticles() :Collection
+    {
+        return $this->articles;
+    }
+
+    /**
+     * @param mixed $articles
+     */
+    public function setArticles($articles)
+    {
+        $this->articles = $articles;
+    }
 
     public function getRoles()
     {

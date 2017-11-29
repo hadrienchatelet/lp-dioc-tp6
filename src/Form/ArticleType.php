@@ -16,6 +16,7 @@ class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //titre tag et contenu
         $builder
             ->add('submit', SubmitType::class)
         ;
